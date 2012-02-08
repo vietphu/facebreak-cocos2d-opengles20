@@ -14,6 +14,10 @@
 
 #import "PhysicsSprite.h"
 
+#import "FacebookImage.h"
+
+#import "FacebookSupport.h"
+
 enum {
 	kTagParentNode = 1,
 };
@@ -60,6 +64,14 @@ enum {
 		// create reset button
 		[self createMenu];
 		
+        if (![[FacebookSupport sharedFacebookSupport] connected]) {
+            [[FacebookSupport sharedFacebookSupport] connect];
+        }else{
+            [self fbConnected];
+        }
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receivedFriends:) name:kFacebookFriendsListReceivedNotificationKey object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(fbConnected) name:kFacebookConnectedNotificationKey object:nil];
+        
 		//Set up sprite
 		
 #if 1
@@ -96,6 +108,20 @@ enum {
 	
 	[super dealloc];
 }	
+
+-(void)fbConnected{
+    [[FacebookSupport sharedFacebookSupport] getFriendsList];
+}
+
+-(void)receivedFriends:(NSNotification*)notification{
+    NSLog(@"%@", [notification description]);
+    for (NSDictionary * friendDict in [[notification userInfo] objectForKey:@"FacebookSupportFriendsKey"]) {
+        FacebookImage * image = [[FacebookImage alloc] initWithFrame:CGRectMake(0, 0, 50, 50)];
+        [image getFriendPhoto:[friendDict objectForKey:@"id"]];
+        [[[CCDirector sharedDirector] view] addSubview:image];
+        [image release];
+    }
+}
 
 -(void) createMenu
 {

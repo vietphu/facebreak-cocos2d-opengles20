@@ -21,4 +21,6 @@
 @property (readonly) UINavigationController *navController;
 @property (readonly) CCDirectorIOS *director;
 
+- (NSString *)applicationDocumentsDirectory;
+
 @end

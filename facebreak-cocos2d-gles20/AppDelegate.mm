@@ -9,6 +9,7 @@
 #import "cocos2d.h"
 
 #import "AppDelegate.h"
+#import "FacebookSupport.h"
 #import "HelloWorldLayer.h"
 
 @implementation AppController
@@ -84,12 +85,29 @@
 	return YES;
 }
 
+#pragma mark - Application's Documents directory
+
+//  Returns the string path to the application's Documents directory.
+- (NSString *)applicationDocumentsDirectory {
+    return [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+}
+
 // Supported orientations: Landscape. Customize it for your own needs
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
 	return UIInterfaceOrientationIsLandscape(interfaceOrientation);
 }
 
+// Pre 4.2 support
+- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url {
+    return [[FacebookSupport sharedFacebookSupport] handleOpenURL:url]; 
+}
+
+// For 4.2+ support
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url
+  sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
+    return [[FacebookSupport sharedFacebookSupport] handleOpenURL:url]; 
+}
 
 // getting a call, pause the game
 -(void) applicationWillResignActive:(UIApplication *)application
