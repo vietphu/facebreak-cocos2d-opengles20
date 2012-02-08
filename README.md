@@ -7,4 +7,4 @@ iOS demo for integrating the Facebook SDK into a Cocos2D game.  This repo contai
 
 Christopher Truman
 <cleetruman@gmail.com>
-<trumandesigns.com>
+<http://trumandesigns.com>
