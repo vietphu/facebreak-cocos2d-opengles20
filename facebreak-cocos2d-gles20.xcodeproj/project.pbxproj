@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FD93860714E45533001D6B58 /* NameDisplay.m in Sources */ = {isa = PBXBuildFile; fileRef = FD93860614E45533001D6B58 /* NameDisplay.m */; };
+		FDB5D0A914E42FC800B1135C /* FriendSpriteManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = FDB5D0A814E42FC800B1135C /* FriendSpriteManager.mm */; };
+		FDB5D0AC14E431FF00B1135C /* FacebookSprite.mm in Sources */ = {isa = PBXBuildFile; fileRef = FDB5D0AB14E431FF00B1135C /* FacebookSprite.mm */; };
 		FDC04C0514E2EC7C00C56DEF /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FDC04C0414E2EC7C00C56DEF /* QuartzCore.framework */; };
 		FDC04C0714E2EC7C00C56DEF /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FDC04C0614E2EC7C00C56DEF /* OpenGLES.framework */; };
 		FDC04C0914E2EC7C00C56DEF /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FDC04C0814E2EC7C00C56DEF /* OpenAL.framework */; };
@@ -198,6 +201,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		FD93860514E45533001D6B58 /* NameDisplay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NameDisplay.h; path = "Game UI/NameDisplay.h"; sourceTree = "<group>"; };
+		FD93860614E45533001D6B58 /* NameDisplay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NameDisplay.m; path = "Game UI/NameDisplay.m"; sourceTree = "<group>"; };
+		FDB5D0A714E42FC800B1135C /* FriendSpriteManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FriendSpriteManager.h; path = "Friend Management/FriendSpriteManager.h"; sourceTree = "<group>"; };
+		FDB5D0A814E42FC800B1135C /* FriendSpriteManager.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = FriendSpriteManager.mm; path = "Friend Management/FriendSpriteManager.mm"; sourceTree = "<group>"; };
+		FDB5D0AA14E431FF00B1135C /* FacebookSprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FacebookSprite.h; path = "Facebook Support/FacebookSprite.h"; sourceTree = "<group>"; };
+		FDB5D0AB14E431FF00B1135C /* FacebookSprite.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = FacebookSprite.mm; path = "Facebook Support/FacebookSprite.mm"; sourceTree = "<group>"; };
 		FDC04C0014E2EC7C00C56DEF /* facebreak-cocos2d-gles20.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "facebreak-cocos2d-gles20.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		FDC04C0414E2EC7C00C56DEF /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		FDC04C0614E2EC7C00C56DEF /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
@@ -585,6 +594,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		FD93860414E454FE001D6B58 /* Game UI */ = {
+			isa = PBXGroup;
+			children = (
+				FD93860514E45533001D6B58 /* NameDisplay.h */,
+				FD93860614E45533001D6B58 /* NameDisplay.m */,
+			);
+			name = "Game UI";
+			sourceTree = "<group>";
+		};
+		FDB5D0A514E42F8700B1135C /* Friend Management */ = {
+			isa = PBXGroup;
+			children = (
+				FDB5D0A714E42FC800B1135C /* FriendSpriteManager.h */,
+				FDB5D0A814E42FC800B1135C /* FriendSpriteManager.mm */,
+			);
+			name = "Friend Management";
+			sourceTree = "<group>";
+		};
 		FDC04BF514E2EC7B00C56DEF = {
 			isa = PBXGroup;
 			children = (
@@ -621,8 +648,10 @@
 		FDC04C1614E2EC7C00C56DEF /* facebreak-cocos2d-gles20 */ = {
 			isa = PBXGroup;
 			children = (
-				FDC04E5814E2F3A600C56DEF /* SynthesizeSingleton.h */,
+				FD93860414E454FE001D6B58 /* Game UI */,
 				FDC04E2D14E2F1DA00C56DEF /* Facebook Support */,
+				FDB5D0A514E42F8700B1135C /* Friend Management */,
+				FDC04E5814E2F3A600C56DEF /* SynthesizeSingleton.h */,
 				FDC04E1A14E2EC9E00C56DEF /* AppDelegate.h */,
 				FDC04E1B14E2EC9F00C56DEF /* AppDelegate.mm */,
 				FDC04E1D14E2EC9F00C56DEF /* HelloWorldLayer.h */,
@@ -1160,6 +1189,8 @@
 		FDC04E2D14E2F1DA00C56DEF /* Facebook Support */ = {
 			isa = PBXGroup;
 			children = (
+				FDB5D0AA14E431FF00B1135C /* FacebookSprite.h */,
+				FDB5D0AB14E431FF00B1135C /* FacebookSprite.mm */,
 				FDC04E3414E2F20000C56DEF /* FacebookImage.h */,
 				FDC04E3514E2F20000C56DEF /* FacebookImage.m */,
 				FDC04E3614E2F20000C56DEF /* FacebookSupport.h */,
@@ -1437,6 +1468,9 @@
 				FDC04E4A14E2F24F00C56DEF /* FBLoginDialog.m in Sources */,
 				FDC04E4B14E2F24F00C56DEF /* FBRequest.m in Sources */,
 				FDC04E5614E2F32900C56DEF /* JSONKit.m in Sources */,
+				FDB5D0A914E42FC800B1135C /* FriendSpriteManager.mm in Sources */,
+				FDB5D0AC14E431FF00B1135C /* FacebookSprite.mm in Sources */,
+				FD93860714E45533001D6B58 /* NameDisplay.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1536,6 +1570,7 @@
 				FDC04E2C14E2EC9F00C56DEF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

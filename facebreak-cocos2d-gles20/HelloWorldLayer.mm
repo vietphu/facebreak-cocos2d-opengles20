@@ -14,10 +14,6 @@
 
 #import "PhysicsSprite.h"
 
-#import "FacebookImage.h"
-
-#import "FacebookSupport.h"
-
 enum {
 	kTagParentNode = 1,
 };
@@ -28,6 +24,7 @@ enum {
 @interface HelloWorldLayer()
 -(void) initPhysics;
 -(void) addNewSpriteAtPosition:(CGPoint)p;
+-(void) addNewFriendSpriteAtPosition:(CGPoint)p;
 -(void) createMenu;
 @end
 
@@ -56,6 +53,7 @@ enum {
 		
 		self.isTouchEnabled = YES;
 		self.isAccelerometerEnabled = YES;
+        friendsLoaded = NO;
 		CGSize s = [CCDirector sharedDirector].winSize;
 		
 		// init physics
@@ -64,13 +62,8 @@ enum {
 		// create reset button
 		[self createMenu];
 		
-        if (![[FacebookSupport sharedFacebookSupport] connected]) {
-            [[FacebookSupport sharedFacebookSupport] connect];
-        }else{
-            [self fbConnected];
-        }
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receivedFriends:) name:kFacebookFriendsListReceivedNotificationKey object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(fbConnected) name:kFacebookConnectedNotificationKey object:nil];
+        [[FriendSpriteManager sharedFriendSpriteManager] setDelegate:self];
+        [[FriendSpriteManager sharedFriendSpriteManager] fetchFriends];
         
 		//Set up sprite
 		
@@ -108,20 +101,6 @@ enum {
 	
 	[super dealloc];
 }	
-
--(void)fbConnected{
-    [[FacebookSupport sharedFacebookSupport] getFriendsList];
-}
-
--(void)receivedFriends:(NSNotification*)notification{
-    NSLog(@"%@", [notification description]);
-    for (NSDictionary * friendDict in [[notification userInfo] objectForKey:@"FacebookSupportFriendsKey"]) {
-        FacebookImage * image = [[FacebookImage alloc] initWithFrame:CGRectMake(0, 0, 50, 50)];
-        [image getFriendPhoto:[friendDict objectForKey:@"id"]];
-        [[[CCDirector sharedDirector] view] addSubview:image];
-        [image release];
-    }
-}
 
 -(void) createMenu
 {
@@ -278,6 +257,68 @@ enum {
 	[sprite setPhysicsBody:body];
 }
 
+-(void) addNewFriendSpriteAtPosition:(CGPoint)p {
+    int rand = arc4random()% ([[[FriendSpriteManager sharedFriendSpriteManager] friendSpriteArray] count]);
+    FacebookSprite* fs = [[[FriendSpriteManager sharedFriendSpriteManager] friendSpriteArray] objectAtIndex:rand];
+    if ([[self children] containsObject:fs.sprite]) {
+        return;
+    }
+    CCLOG(@"Add sprite %@", [[FriendSpriteManager sharedFriendSpriteManager] nameForFBID:fs.friendIdentifier]);					
+    fs.sprite.position = p;
+
+    // Define the dynamic body.
+    //Set up a 1m squared box in the physics world
+    b2BodyDef bodyDef;
+    bodyDef.type = b2_dynamicBody;
+    bodyDef.position.Set(p.x/PTM_RATIO, p.y/PTM_RATIO);
+    b2Body *body = world->CreateBody(&bodyDef);
+
+    // Define another box shape for our dynamic body.
+    b2PolygonShape dynamicBox;
+    dynamicBox.SetAsBox(.5f, .5f);//These are mid points for our 1m box
+
+    // Define the dynamic body fixture.
+    b2FixtureDef fixtureDef;
+    fixtureDef.shape = &dynamicBox;	
+    fixtureDef.density = 1.0f;
+    fixtureDef.friction = 0.3f;
+    body->CreateFixture(&fixtureDef);
+
+    [fs.sprite setPhysicsBody:body];
+    [self addChild:fs.sprite];
+}
+
+-(void)finishedLoadingSprites{
+    friendsLoaded = YES;
+//    for (int i = 0; i<20; i++){//[[[FriendSpriteManager sharedFriendSpriteManager] friendSpriteArray] count]; i++) {
+//        FacebookSprite* fs = [[[FriendSpriteManager sharedFriendSpriteManager] friendSpriteArray] objectAtIndex:i];
+//        CCLOG(@"Add sprite");					
+//        CGPoint p = CGPointMake(20 + arc4random()%40, 20 + arc4random()%40);
+//        fs.sprite.position = p;
+//        
+//        // Define the dynamic body.
+//        //Set up a 1m squared box in the physics world
+//        b2BodyDef bodyDef;
+//        bodyDef.type = b2_dynamicBody;
+//        bodyDef.position.Set(p.x/PTM_RATIO, p.y/PTM_RATIO);
+//        b2Body *body = world->CreateBody(&bodyDef);
+//        
+//        // Define another box shape for our dynamic body.
+//        b2PolygonShape dynamicBox;
+//        dynamicBox.SetAsBox(.5f, .5f);//These are mid points for our 1m box
+//        
+//        // Define the dynamic body fixture.
+//        b2FixtureDef fixtureDef;
+//        fixtureDef.shape = &dynamicBox;	
+//        fixtureDef.density = 1.0f;
+//        fixtureDef.friction = 0.3f;
+//        body->CreateFixture(&fixtureDef);
+//        
+//        [fs.sprite setPhysicsBody:body];
+//        [self addChild:fs.sprite];
+//    }
+}
+
 -(void) update: (ccTime) dt
 {
 	//It is recommended that a fixed time step is used with Box2D for stability
@@ -300,8 +341,11 @@ enum {
 		CGPoint location = [touch locationInView: [touch view]];
 		
 		location = [[CCDirector sharedDirector] convertToGL: location];
-		
-		[self addNewSpriteAtPosition: location];
+		if (friendsLoaded) {
+            [self addNewFriendSpriteAtPosition: location];
+        }else{
+            [self addNewSpriteAtPosition:location];
+        }
 	}
 }
 

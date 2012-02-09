@@ -4,6 +4,7 @@
 
 #import <Foundation/Foundation.h>
 #import "FBConnect.h"
+#import "AppDelegate.h"
 
 #define kFacebookConnectedNotificationKey @"FacebookSupportConnected"
 #define kFacebookDidFailtoConnectNotificationKey @"FacebookSupportFailedToConnect"

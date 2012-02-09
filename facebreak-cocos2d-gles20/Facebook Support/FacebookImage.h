@@ -7,6 +7,7 @@
 
 #import <Foundation/Foundation.h>
 #import "FBConnect.h"
+#import "AppDelegate.h"
 
 @interface FacebookImage : UIImageView <FBRequestDelegate> {
     Facebook *facebook;

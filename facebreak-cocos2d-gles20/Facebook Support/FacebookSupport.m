@@ -65,7 +65,9 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(FacebookSupport);
 
 - (void)postImage:(UIImage*)newImage withText:(NSString*)textFormat {
     if ([facebook isSessionValid]) {
-        NSString *filepath = [[[[UIApplication sharedApplication] delegate] applicationDocumentsDirectory] stringByAppendingPathComponent:@"avatar.png"];
+        AppController * appDelegate = (AppController*)[[UIApplication sharedApplication] delegate];
+
+        NSString *filepath = [[appDelegate applicationDocumentsDirectory] stringByAppendingPathComponent:@"avatar.png"];
         [UIImagePNGRepresentation(newImage) writeToFile:filepath atomically:YES];
         NSMutableDictionary* params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
                                        kAppID, @"app_id",
