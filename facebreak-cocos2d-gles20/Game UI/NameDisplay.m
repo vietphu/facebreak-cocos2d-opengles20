@@ -10,4 +10,21 @@
 
 @implementation NameDisplay
 
+@synthesize nameLabel = _nameLabel;
+
+-(id)init{
+    if (self = [super init]) {
+        self.nameLabel = [[CCLabelTTF alloc] initWithString:@"T" fontName:@"Helvetica" fontSize:16];
+        [self.nameLabel setPosition:CGPointMake(240, 240)];
+        [self addChild:self.nameLabel];
+    }
+    return self;
+}
+
+-(void)dealloc{
+    [self.nameLabel dealloc];
+    _nameLabel = nil;
+    [super dealloc];
+}
+
 @end

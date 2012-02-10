@@ -16,13 +16,15 @@
 
 @interface FriendSpriteManager : NSObject
 {
-  NSMutableArray * _friendSpriteArray;
-  NSMutableDictionary * _friendDictionary;
-  id _delegate;
+    NSMutableArray * _friendSpriteArray;
+    NSMutableDictionary * _friendDictionary;
+    NSOperationQueue * _createFriendSpriteQueue;
+    id _delegate;
 }
 
-@property (nonatomic, retain) NSMutableArray * friendSpriteArray;
-@property (nonatomic, retain) NSMutableDictionary * friendDictionary;
+@property (atomic, retain) NSMutableArray * friendSpriteArray;
+@property (atomic, retain) NSMutableDictionary * friendDictionary;
+@property (nonatomic, retain) NSOperationQueue * createFriendSpriteQueue;
 @property (nonatomic, assign) id delegate;
 
 + (FriendSpriteManager*)sharedFriendSpriteManager;
@@ -36,6 +38,6 @@
 
 @protocol FriendSpriteManagerDelegate <NSObject>
 
--(void)finishedLoadingSprites;
+- (void)finishedLoadingSprites;
 
 @end

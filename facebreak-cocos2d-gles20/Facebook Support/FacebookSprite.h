@@ -13,10 +13,12 @@
   Facebook *facebook;
   NSString *_friendIdentifier;
   PhysicsSprite * _sprite;
+    BOOL loaded;
 }
 
-@property (nonatomic, retain) NSString * friendIdentifier;
-@property (nonatomic, retain) PhysicsSprite * sprite;
+@property (atomic, retain) NSString * friendIdentifier;
+@property (atomic, retain) PhysicsSprite * sprite;
+@property (atomic, readwrite) BOOL loaded;
 
 - (void)getFriendPhoto:(NSString*)identifier;
 

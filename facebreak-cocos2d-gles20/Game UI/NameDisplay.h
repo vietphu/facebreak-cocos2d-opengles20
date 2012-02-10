@@ -6,8 +6,12 @@
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
-#import "CCLayer.h"
+#import "cocos2d.h"
 
-@interface NameDisplay : CCLayer
+@interface NameDisplay : CCLayer {
+    CCLabelTTF * _nameLabel;
+}
+
+@property (nonatomic, retain) CCLabelTTF * nameLabel;
 
 @end

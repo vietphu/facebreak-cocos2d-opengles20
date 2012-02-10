@@ -143,6 +143,8 @@ enum {
 	CGSize size = [[CCDirector sharedDirector] winSize];
 	[menu setPosition:ccp( size.width/2, size.height/2)];
 	
+    nameDisplay = [[NameDisplay alloc] init];
+    [self addChild:nameDisplay];
 	
 	[self addChild: menu z:-1];	
 }
@@ -261,9 +263,16 @@ enum {
     int rand = arc4random()% ([[[FriendSpriteManager sharedFriendSpriteManager] friendSpriteArray] count]);
     FacebookSprite* fs = [[[FriendSpriteManager sharedFriendSpriteManager] friendSpriteArray] objectAtIndex:rand];
     if ([[self children] containsObject:fs.sprite]) {
+        [self addNewSpriteAtPosition:p];
         return;
     }
-    CCLOG(@"Add sprite %@", [[FriendSpriteManager sharedFriendSpriteManager] nameForFBID:fs.friendIdentifier]);					
+    if (!fs.loaded) {
+        [self addNewSpriteAtPosition:p];
+        return;
+    }
+    NSString * friendName = [[FriendSpriteManager sharedFriendSpriteManager] nameForFBID:fs.friendIdentifier];
+    CCLOG(@"Add sprite %@", friendName);	
+    [nameDisplay.nameLabel setString:friendName];
     fs.sprite.position = p;
 
     // Define the dynamic body.
@@ -275,7 +284,7 @@ enum {
 
     // Define another box shape for our dynamic body.
     b2PolygonShape dynamicBox;
-    dynamicBox.SetAsBox(.5f, .5f);//These are mid points for our 1m box
+    dynamicBox.SetAsBox(.75f, .75f);//These are mid points for our 1m box
 
     // Define the dynamic body fixture.
     b2FixtureDef fixtureDef;
