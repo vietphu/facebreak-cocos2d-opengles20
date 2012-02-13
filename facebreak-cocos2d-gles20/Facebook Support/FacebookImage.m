@@ -47,7 +47,7 @@
         friendIdentifier = [[NSString alloc] initWithString:identifier];
         AppController * appDelegate = (AppController*)[[UIApplication sharedApplication] delegate];
 
-        NSString *path = [[appDelegate applicationDocumentsDirectory] stringByAppendingPathComponent:@"FacebookImages"];
+        NSString *path = [[appDelegate applicationCacheDirectory] stringByAppendingPathComponent:@"FacebookImages"];
         BOOL directory = NO;
         if (![[NSFileManager defaultManager] fileExistsAtPath:path isDirectory:&directory]) {
             [[NSFileManager defaultManager] createDirectoryAtPath:path withIntermediateDirectories:YES attributes:nil error:nil];
@@ -78,7 +78,7 @@
     if ([result isKindOfClass:[NSData class]]&&[request.url hasSuffix:@"picture"]) {
         AppController * appDelegate = (AppController*)[[UIApplication sharedApplication] delegate];
 
-        NSString *path = [[[appDelegate applicationDocumentsDirectory] stringByAppendingPathComponent:@"FacebookImages"] stringByAppendingPathComponent:friendIdentifier];
+        NSString *path = [[[appDelegate applicationCacheDirectory] stringByAppendingPathComponent:@"FacebookImages"] stringByAppendingPathComponent:friendIdentifier];
         [result writeToFile:path atomically:YES];
         if ([[[request.url stringByReplacingOccurrencesOfString:@"https://graph.facebook.com/" withString:@""] stringByReplacingOccurrencesOfString:@"/picture" withString:@""] isEqualToString:friendIdentifier]) {
             self.image = [UIImage imageWithData:result];

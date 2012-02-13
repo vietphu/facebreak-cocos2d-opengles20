@@ -37,7 +37,7 @@
     if ([facebook isSessionValid]) {
 	[self setFriendIdentifier:identifier];
 	AppController * appDelegate = (AppController*)[[UIApplication sharedApplication] delegate];
-	NSString *path = [[appDelegate applicationDocumentsDirectory] stringByAppendingPathComponent:@"FacebookImages"];
+	NSString *path = [[appDelegate applicationCacheDirectory] stringByAppendingPathComponent:@"FacebookImages"];
 	BOOL directory = NO;
 	if (![[NSFileManager defaultManager] fileExistsAtPath:path isDirectory:&directory]) {
 	    [[NSFileManager defaultManager] createDirectoryAtPath:path withIntermediateDirectories:YES attributes:nil error:nil];
@@ -70,7 +70,7 @@
     //  check if request was picture request
     if ([result isKindOfClass:[NSData class]]&&[request.url hasSuffix:@"picture"]) {
 	AppController * appDelegate = (AppController*)[[UIApplication sharedApplication] delegate];
-	NSString *path = [[[appDelegate applicationDocumentsDirectory] stringByAppendingPathComponent:@"FacebookImages"] stringByAppendingPathComponent:self.friendIdentifier];
+	NSString *path = [[[appDelegate applicationCacheDirectory] stringByAppendingPathComponent:@"FacebookImages"] stringByAppendingPathComponent:self.friendIdentifier];
 	[result writeToFile:path atomically:YES];
         if ([[[request.url stringByReplacingOccurrencesOfString:@"https://graph.facebook.com/" withString:@""] stringByReplacingOccurrencesOfString:@"/picture?type=square" withString:@""] isEqualToString:self.friendIdentifier]) {
             CCTexture2D * friendTexture = [[CCTexture2D alloc] initWithData:result pixelFormat:kCCTexture2DPixelFormat_RGB888 pixelsWide:50 pixelsHigh:50 contentSize:CGSizeMake(50, 50)];

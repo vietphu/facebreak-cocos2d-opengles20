@@ -355,6 +355,11 @@ enum {
         }else{
             [self addNewSpriteAtPosition:location];
         }
+        b2Body* bodies = world->GetBodyList();
+        for (int i = 0; i<world->GetBodyCount(); i++) {
+            b2Body* body = &bodies[i];
+            body->ApplyForce(b2Vec2(10.0f, 10.0f), b2Vec2(location.x, location.y));
+        }
 	}
 }
 

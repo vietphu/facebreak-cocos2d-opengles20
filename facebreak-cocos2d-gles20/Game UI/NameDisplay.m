@@ -14,7 +14,7 @@
 
 -(id)init{
     if (self = [super init]) {
-        self.nameLabel = [[CCLabelTTF alloc] initWithString:@"T" fontName:@"Helvetica" fontSize:16];
+        self.nameLabel = [[CCLabelTTF alloc] initWithString:@"_" fontName:@"Helvetica" fontSize:16];
         [self.nameLabel setPosition:CGPointMake(240, 240)];
         [self addChild:self.nameLabel];
     }

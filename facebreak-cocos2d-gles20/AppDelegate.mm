@@ -88,8 +88,8 @@
 #pragma mark - Application's Documents directory
 
 //  Returns the string path to the application's Documents directory.
-- (NSString *)applicationDocumentsDirectory {
-  return [NSSearchPathForDirectoriesInDomains (NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+- (NSString *)applicationCacheDirectory {
+  return [NSSearchPathForDirectoriesInDomains (NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0];
 }
 
 // Supported orientations: Landscape. Customize it for your own needs
