@@ -326,6 +326,11 @@ enum {
 //        [fs.sprite setPhysicsBody:body];
 //        [self addChild:fs.sprite];
 //    }
+    for (int x = 1; x<5; x++) {
+        for (int y = 1; y<5; y++) {
+            [self addNewFriendSpriteAtPosition:CGPointMake(x*50, y*50)];
+        }
+    }
 }
 
 -(void) update: (ccTime) dt
@@ -350,15 +355,13 @@ enum {
 		CGPoint location = [touch locationInView: [touch view]];
 		
 		location = [[CCDirector sharedDirector] convertToGL: location];
-		if (friendsLoaded) {
-            [self addNewFriendSpriteAtPosition: location];
-        }else{
-            [self addNewSpriteAtPosition:location];
-        }
-        b2Body* bodies = world->GetBodyList();
-        for (int i = 0; i<world->GetBodyCount(); i++) {
-            b2Body* body = &bodies[i];
-            body->ApplyForce(b2Vec2(10.0f, 10.0f), b2Vec2(location.x, location.y));
+//		if (friendsLoaded) {
+//            [self addNewFriendSpriteAtPosition: location];
+//        }else{
+//            [self addNewSpriteAtPosition:location];
+//        }
+        for (b2Body* b = world->GetBodyList(); b; b = b->GetNext()) {
+            b->ApplyForceToCenter(b2Vec2(location.x*10, location.y*10));
         }
 	}
 }
